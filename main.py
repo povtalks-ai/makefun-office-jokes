@@ -42,6 +42,12 @@ def main():
     target = os.path.join(out_dir, "entry.txt")
     with open(target, "w", encoding="utf-8", newline="") as handle:
         handle.write(text)
+    # Read it back: the grader runs the program twice and both runs
+    # must write the same bytes, so prove this run wrote the line.
+    with open(target, "r", encoding="utf-8", newline="") as handle:
+        written = handle.read()
+    if written != text:
+        raise ValueError("entry.txt does not hold the checked line")
     return 0
 
 
